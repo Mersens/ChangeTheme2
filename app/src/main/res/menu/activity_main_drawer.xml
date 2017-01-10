@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_manage"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="更换主题" />
+        <item
+            android:id="@+id/nav_change_skin"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="插件式换皮" />
+        <item
+            android:id="@+id/nav_reset_skin"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="恢复默认" />
+        <item
+            android:id="@+id/nav_factory"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="TestFactory" />
+    </group>
+
+</menu>
