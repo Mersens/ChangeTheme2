@@ -1,9 +1,6 @@
 package com.mersens.changetheme;
 
 import android.content.Intent;
-import android.content.res.AssetManager;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -13,7 +10,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -29,11 +25,10 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.Thing;
 
 import java.io.File;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener, ColorChooserDialog.ColorCallback {
     private ListView mListView;
     private View headerView;
@@ -138,6 +133,13 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        if(id==R.id.nav_app_change_skin){
+            //应用内换肤
+            SkinManager.getInstance().changeSkin("purple");
+
+        }
+
+
         if (id == R.id.nav_manage) {
             new ColorChooserDialog.Builder(MainActivity.this, R.string.theme)
                     .customColors(R.array.arraycolors, null)
@@ -149,7 +151,25 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_change_skin) {
             //更换皮肤
-            loadPlugin(skin_plugin_path,skin_pkg);
+
+
+           // loadPlugin(skin_plugin_path,skin_pkg);
+            SkinManager.getInstance().changeSkin(skin_plugin_path,skin_pkg, new ISkinChangeCallBack() {
+                @Override
+                public void onStart() {
+
+                }
+
+                @Override
+                public void onError(Exception e) {
+
+                }
+
+                @Override
+                public void onComplate() {
+
+                }
+            });
 
         } else if (id == R.id.nav_reset_skin) {
             //重置皮肤
@@ -162,24 +182,6 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    private void loadPlugin(String skin_plugin_path, String skin_pkg) {
-        try {
-            AssetManager assetManager=AssetManager.class.newInstance();
-            Method addAssetPath = assetManager.getClass().getMethod("addAssetPath", String.class);
-            addAssetPath.invoke(assetManager,skin_plugin_path);
-            Resources resource=getResources();
-            Resources mResource=new Resources(assetManager,resource.getDisplayMetrics(),resource.getConfiguration());
-
-            ResourceManager manager=new ResourceManager(mResource,skin_pkg);
-            Drawable drawable=manager.getDrawableByName("skin_main_bg");
-            if(drawable!=null){
-                headerView.setBackgroundDrawable(drawable);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
 
     private void init() {
@@ -207,12 +209,25 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public View getView(int i, View view, ViewGroup viewGroup) {
-                View v = inflater.inflate(R.layout.item, viewGroup, false);
-                TextView tv = (TextView) v.findViewById(R.id.tv);
-                tv.setText(mList.get(i));
-                return v;
+                ViewHolder holder=null;
+                if(view==null){
+                    view=inflater.inflate(R.layout.item,viewGroup,false);
+                    holder=new ViewHolder();
+                    holder.tv=(TextView) view.findViewById(R.id.tv);
+                    view.setTag(holder);
+
+                }else{
+                   holder=(ViewHolder)view.getTag();
+                }
+                holder.tv.setText(mList.get(i));
+                return view;
             }
         });
+    }
+
+
+    static class ViewHolder{
+        TextView tv;
     }
 
 

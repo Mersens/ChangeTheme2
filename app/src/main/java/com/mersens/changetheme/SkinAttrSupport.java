@@ -20,11 +20,19 @@ public class SkinAttrSupport {
             String attrName=attributeSet.getAttributeName(i);
             String attrVal=attributeSet.getAttributeValue(i);
             if(attrVal.startsWith("@")){
-                int id=Integer.parseInt(attrVal.substring(1));
+                int id=-1;
+                try{
+                    id=Integer.parseInt(attrVal.substring(1));
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                if(id==-1){
+                    continue;
+                }
                 String resName=context.getResources().getResourceEntryName(id);
                 if(resName.startsWith(Const.SKIN_PREFIX)){
                     mSkinAttrType=getSupportAttrType(attrName);
-                    if(mSkinAttrType==null) break;
+                    if(mSkinAttrType==null) continue;
                     mSkinAttr=new SkinAttr(resName,mSkinAttrType);
                     mSkinAttrs.add(mSkinAttr);
                 }

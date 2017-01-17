@@ -14,7 +14,8 @@
     <color name="lime">#cddc39</color>
     <color name="brown">#795548</color>
     <color name="yellow">#ffeb3b</color>
-    <color name="skin_item_text_color">@color/red</color>
+    <color name="skin_item_color">@color/light_blue</color>
+    <color name="skin_item_color_purple">@color/purple</color>
 
 
     <array name="arraycolors">

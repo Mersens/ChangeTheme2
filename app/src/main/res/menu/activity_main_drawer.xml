@@ -7,9 +7,13 @@
             android:icon="@drawable/ic_menu_manage"
             android:title="更换主题" />
         <item
-            android:id="@+id/nav_change_skin"
+        android:id="@+id/nav_change_skin"
+        android:icon="@drawable/ic_menu_manage"
+        android:title="插件式换皮" />
+        <item
+            android:id="@+id/nav_app_change_skin"
             android:icon="@drawable/ic_menu_manage"
-            android:title="插件式换皮" />
+            android:title="应用内换肤" />
         <item
             android:id="@+id/nav_reset_skin"
             android:icon="@drawable/ic_menu_manage"

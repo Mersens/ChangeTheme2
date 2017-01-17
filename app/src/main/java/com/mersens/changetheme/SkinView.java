@@ -12,11 +12,12 @@ import java.util.List;
 public class SkinView {
     private View mView;
     private List<SkinAttr> mList;
-    public void SkinView(View view,List<SkinAttr> list){
-        this.mList=list;
-        this.mView=view;
 
+    public SkinView(View view, List<SkinAttr> skinAttrs) {
+        this.mList=skinAttrs;
+        this.mView=view;
     }
+
 
     public List<SkinAttr> getList() {
         return mList;
